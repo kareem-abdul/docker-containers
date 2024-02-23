@@ -1,0 +1,17 @@
+#!/bin/bash
+# check if docker-compose file exists
+which docker-compose &> /dev/null;
+if [ $? -eq 0 ]; then 
+    docker-compose exec nginx nginx $@;
+    exit 0;
+fi
+
+# check if docker compose plugin is installed
+docker compose version &> /dev/null
+if [ $? -eq 0 ]; then 
+    docker compose exec nginx nginx $@;
+    exit 0;
+fi
+echo "docker compose not found" 1>&2;
+exit 1;
+

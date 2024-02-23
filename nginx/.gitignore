@@ -1,0 +1,5 @@
+var_log_nginx/**
+etc_letsencrypt/**/*
+
+!**/etc_letsencrypt/live/default/*
+!**/.gitkeep

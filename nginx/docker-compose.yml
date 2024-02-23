@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  nginx:
+    container_name: 'nginx'
+    image: 'nginx_certbot'
+    build: .
+    restart: on-failure
+    volumes:
+      - ./sites-enabled:/etc/nginx/sites-enabled
+      - ./var_www:/var/www
+      - ./etc_letsencrypt:/etc/letsencrypt
+      - ./var_log_nginx:/var/log/nginx
+    network_mode: host
