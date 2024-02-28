@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mssql:
+    container_name: mssql
+    restart: always
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: y
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD:-P@ssw0rd123456}
+      MSSQL_PID: Developer
+      MSSQL_DATABASE: mssql_db
+    entrypoint:
+      - bash
+      - -c
+      - |
+        (
+          echo "waiting for sql server to startup";
+          until /opt/mssql-tools/bin/sqlcmd -U SA -P $$MSSQL_SA_PASSWORD -Q "select 1" -b -o /dev/null; do sleep 1; done;
+          echo; echo;
+          echo "           creating database             ";
+          echo; echo;
+          /opt/mssql-tools/bin/sqlcmd -U SA -P $$MSSQL_SA_PASSWORD -Q "CREATE DATABASE $$MSSQL_DATABASE" -o /dev/null
+        ) & /opt/mssql/bin/permissions_check.sh /opt/mssql/bin/sqlservr
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -U SA -P $$MSSQL_SA_PASSWORD -Q "select 1" -b -o /dev/null
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    profiles:
+      - dev
+      - infra
+    volumes:
+      - ./data:/var/opt/mssql
+    networks:
+      - mssql_network
+
+networks:
+  mssql_network:
+    name: mssql_network
