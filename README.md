@@ -15,6 +15,7 @@ A collection of docker compose and Docker files for development needs.
     ./start.sh
     ```
   - Search for the container to run, and press enter 
+    ![screenshot](./assets/screenshot.png)
 - ### Manual
   - open your terminal and cd into required container directory
     ```bash
