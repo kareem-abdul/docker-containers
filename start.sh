@@ -2,6 +2,9 @@
 
 # requires fzf to be installed
 
+DIR=$(dirname "$(readlink -f "$0")")
+cd $DIR
+
 find . -type f -iname "docker-compose*" 2>/dev/null \
     | sed -E 's|^./(.*)$|\1|g' \
     | fzf -m -i --layout=reverse --height=20 --border=rounded --border-label="Choose service" --info=right --preview='less {}' \
