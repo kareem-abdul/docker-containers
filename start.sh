@@ -7,7 +7,7 @@ cd $DIR
 
 find . -type f -iname "docker-compose*" 2>/dev/null \
     | sed -E 's|^./(.*)$|\1|g' \
-    | fzf -m -i --layout=reverse --height=20 --border=rounded --border-label="Choose service" --info=right --preview='less {}' \
+    | fzf -m -i --layout=reverse --height="100%" --border=rounded --border-label="Choose service" --info=right --preview='less {}' \
     | while read -r composefile; do
         which docker-compose &> /dev/null;
         if [ $? -eq 0 ]; then 
