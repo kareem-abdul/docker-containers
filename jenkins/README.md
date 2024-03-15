@@ -3,7 +3,6 @@
 This creates a jenkins instance using docker with docker and blueocean support.
 
 ## prerequisite
-
 - docker
 - docker compose
 
@@ -17,11 +16,11 @@ $ docker compose up --build -d
 ```
 
 ## Post installation set up
-For this instance to work with pipelines defined in Flycatch make sure that the following steps are followed.
+As a post setup install the following for general features
 
-- add [this](https://github.com/flycatch/flycatch-jenkins-shared-library) as a global library using the following plugin
+- add Groovy library support to add global functions
     - [Pipeline: GitHub Groovy Libraries](https://plugins.jenkins.io/pipeline-github-lib/)
-- install the following github plugins
+- install the following GitHub plugins to integrate with github
     - [GitHub Branch Source Plugin](https://plugins.jenkins.io/github-branch-source/)
     - [GitHub Checks plugin](https://plugins.jenkins.io/github-checks/)
 - also make sure that the following plugins are also installed
