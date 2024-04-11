@@ -15,9 +15,11 @@ if which docker &> /dev/null; then
         COMPOSE=1
     fi
 elif which podman &> /dev/null; then
-    if which docker-compose &> /dev/null || which podman-compose &> /dev/null; then
-        alias compose="podman compose 2> /dev/null"
+    alias compose="podman compose"
+    if which docker-compose &> /dev/null ; then
         COMPOSE=1
+    elif which podman-compose &> /dev/null; then
+        COMPOSE=2
     fi
 fi
 
@@ -26,6 +28,18 @@ if [ $COMPOSE -eq 0 ]; then
     exit 1;
 fi
 
+function isRunning() {
+    if [ $COMPOSE -eq 1 ]; then
+        if [[ "$(compose 2>/dev/null ls | grep $1)" == "" ]]; then
+            return 0
+        fi
+        return 1
+    fi
+    if [[ "$(compose 2>/dev/null -f $1)" == "" ]]; then
+        return 0
+    fi
+    return 1
+}
 
 DIR=$(dirname "$(readlink -f "$0")")
 cd $DIR
@@ -34,6 +48,13 @@ find . -type f -iname "docker-compose*" 2>/dev/null \
     | sed -E 's|^./(.*)$|\1|g' \
     | fzf -m -i --layout=reverse --height="100%" --border=rounded --border-label="Choose service" --info=right --preview='less {}' \
     | while read -r composefile; do
+        if ! isRunning "$composefile"; then
+            echo "downing $composefile"
+            compose -f "$composefile" down
+            sleep 2
+            exit 0
+        fi
+        echo "running $composefile"
         compose -f "$composefile" up --build -d
         sleep 2;
     done
