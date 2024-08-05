@@ -1,0 +1,12 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "main": "test.js",
+  "type": "module",
+  "scripts": {
+      "start": "node ./test.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
+}
