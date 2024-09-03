@@ -8,9 +8,9 @@ services:
       - ./swagger-docs:/docs:ro
     ports:
       - 3030:8080
-    network:
+    networks:
       - swagger
 
 networks:
-  swagger-network:
+  swagger:
     name: 'swagger'
