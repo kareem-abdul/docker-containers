@@ -1,0 +1,16 @@
+
+services:
+  swagger:
+    container_name: 'swagger'
+    image: swaggerapi/swagger-ui
+    restart: on-failure
+    volumes:
+      - ./swagger-docs:/docs:ro
+    ports:
+      - 3030:8080
+    network:
+      - swagger
+
+networks:
+  swagger-network:
+    name: 'swagger'
