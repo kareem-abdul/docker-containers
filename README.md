@@ -12,7 +12,7 @@ A collection of docker compose and Docker files for development needs.
 
   - Run the script in your terminal via
     ```bash
-    ./dc_start.sh
+    ./dc_start
     ```
   - Search for the container to run, and press enter 
 ![screenshot](./assets/screenshot.png)
