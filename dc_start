@@ -41,7 +41,7 @@ function isRunning() {
     return 1
 }
 
-DIR=$(dirname "$(readlink -f "$0")")
+DIR=${DOCKER_CONTAINERS_HOME:-$(dirname "$(readlink -f "$0")")}
 cd $DIR
 
 find . -type f -iname "docker-compose*" 2>/dev/null \
