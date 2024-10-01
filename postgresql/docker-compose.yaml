@@ -1,0 +1,16 @@
+services:
+ db:
+   image: postgres:15-alpine
+   container_name: postgres
+   environment:
+     - POSTGRES_PASSWORD=password
+   volumes:
+     - "./data:/data/postgres"
+   ports:
+     - "5433:5432"
+   networks:
+     -  postgres_network
+
+networks:
+  postgres_network:
+    name: postgres_network
