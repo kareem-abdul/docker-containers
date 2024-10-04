@@ -11,12 +11,13 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_DATABASE=tr
     ports:
-      - 27017:27017
+      - "127.0.0.1:27017:27017"
     healthcheck:
        test: test $$(mongosh -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --quiet --eval "db.stats().ok") -eq 1
        interval: 10s
        start_period: 30s
     volumes:
+      - ./mongoshrc.js:/data/db/.mongoshrc.js
       - ./data:/data/db
       - ./config:/data/configdb
     networks:
@@ -33,7 +34,7 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
     ports:
-      - 27018:8081
+      - "127.0.0.1:27018:8081"
     networks:
       - mongo_network
     depends_on:
