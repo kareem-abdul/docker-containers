@@ -4,7 +4,7 @@ services:
     image: rnwood/smtp4dev
     restart: on-failure
     ports:
-      - "127.0.0.1:3000:80"
+      - "3000:80"
       - "127.0.0.1:2525:25"
     networks:
         - smtp-network
