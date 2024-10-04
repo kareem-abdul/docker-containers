@@ -4,14 +4,12 @@ services:
   redis:
     restart: always
     container_name: redis
-    command: redis-server --port 6379 --requirepass ${REDIS_PASSWORD}
+    command: redis-server --port 6379
     image: redis:alpine
     volumes:
       - ./data:/data
     ports:
       - 6379:6379
-    environment:
-        REDIS_PASSWORD: redis 
     networks:
       - redis_network 
 networks:
