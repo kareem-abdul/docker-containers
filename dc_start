@@ -51,11 +51,11 @@ find . -type f -iname "docker-compose*" 2>/dev/null \
         if ! isRunning "$composefile"; then
             echo "downing $composefile"
             compose -f "$composefile" down
-            sleep 2
-            exit 0
+            continue
         fi
         echo "running $composefile"
         compose -f "$composefile" up --build -d
-        sleep 2;
     done
+
+sleep 2
 
