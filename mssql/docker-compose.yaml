@@ -33,6 +33,15 @@ services:
       - ./data:/var/opt/mssql
     networks:
       - mssql_network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1512M
+        reservations:
+          cpus: '0.25'
+          memory: 1024M
+
 
 networks:
   mssql_network:
