@@ -30,7 +30,7 @@ services:
       timeout: 3s
       retries: 5
     volumes:
-      - ./data:/var/opt/mssql
+      - mssql:/var/opt/mssql/data:rw
     networks:
       - mssql_network
     deploy:
@@ -46,3 +46,7 @@ services:
 networks:
   mssql_network:
     name: mssql_network
+
+volumes:
+  mssql:
+    name: mssql
