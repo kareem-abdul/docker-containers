@@ -18,14 +18,14 @@ services:
       - |
         (
           echo "waiting for sql server to startup";
-          until /opt/mssql-tools/bin/sqlcmd -U SA -P $$MSSQL_SA_PASSWORD -Q "select 1" -b -o /dev/null; do sleep 1; done;
+          until /opt/mssql-tools18/bin/sqlcmd -U SA -P $$MSSQL_SA_PASSWORD -Q "select 1" -b -o /dev/null; do sleep 1; done;
           echo; echo;
           echo "           creating database             ";
           echo; echo;
-          /opt/mssql-tools/bin/sqlcmd -U SA -P $$MSSQL_SA_PASSWORD -Q "CREATE DATABASE $$MSSQL_DATABASE" -o /dev/null
+          /opt/mssql-tools18/bin/sqlcmd -U SA -P $$MSSQL_SA_PASSWORD -Q "CREATE DATABASE $$MSSQL_DATABASE" -o /dev/null
         ) & /opt/mssql/bin/permissions_check.sh /opt/mssql/bin/sqlservr
     healthcheck:
-      test: /opt/mssql-tools/bin/sqlcmd -U SA -P $$MSSQL_SA_PASSWORD -Q "select 1" -b -o /dev/null
+      test: /opt/mssql-tools18/bin/sqlcmd -U SA -P $$MSSQL_SA_PASSWORD -Q "select 1" -b -o /dev/null
       interval: 10s
       timeout: 3s
       retries: 5
