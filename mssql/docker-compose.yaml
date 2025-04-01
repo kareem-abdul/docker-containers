@@ -5,6 +5,11 @@ services:
     container_name: mssql
     restart: always
     image: mcr.microsoft.com/mssql/server
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VERSION: 2022
     ports:
       - "1433:1433"
     environment:
