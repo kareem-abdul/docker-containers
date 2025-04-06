@@ -1,6 +1,22 @@
 version: '3.8'
 
 services:
+  plantuml-server:
+    image: plantuml/plantuml-server
+    expose:
+      - "8080"
+    networks:
+      - drawionet
+    volumes:
+      - fonts_volume:/usr/share/fonts/drawio
+  image-export:
+    image: jgraph/export-server
+    environment:
+      - DRAWIO_BASE_URL=http://draw:8080
+    volumes:
+      - fonts_volume:/usr/share/fonts/drawio
+    networks:
+      - drawionet
   draw:
     container_name: 'draw'
     restart: always
@@ -8,4 +24,18 @@ services:
     ports:
       - "8899:8080"
       - "8443:8443"
+    links:
+      - plantuml-server:plantuml-server
+      - image-export:image-export
+    environment:
+      - DRAWIO_SELF_CONTAINED=1
+      - EXPORT_URL=http://image-export:8000/
+      - PLANTUML_URL=http://plantuml-server:8080/
+    networks:
+        - drawionet
 
+networks:
+  drawionet:
+
+volumes:
+  fonts_volume:
