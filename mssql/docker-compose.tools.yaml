@@ -13,11 +13,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.50'
-          memory: 1512M
+          cpus: '0.20'
+          memory: 512M
         reservations:
-          cpus: '0.25'
-          memory: 1024M
+          cpus: '0.20'
+          memory: 512M
     networks:
       - mssql_tools_network
 
