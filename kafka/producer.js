@@ -1,20 +1,24 @@
-import { Kafka } from "kafkajs";
+const { Kafka } = require('kafkajs');
+
 const clientId = "mock-up-kafka-producer-client";
 const brokers = ["localhost:9092"];
 const topic = "events";
 const kafka = new Kafka({ clientId, brokers });
 const producer = kafka.producer();
 
+let index = 0
 const produce = async () => {
     await producer.connect();
-    await producer.send({
-        topic,
-        messages: [
-            { key: "key1", value: "hello world", partition: 0 },
-            { key: "key2", value: "hey hey!", partition: 0 },
-        ],
-    })
-}
+    while (true) {
+        await producer.send({
+            topic,
+            messages: [
+                { key: "key1", value: `${index++}`, partition: 0 },
+                // { key: "key2", value: "hey hey!", partition: 0 },
+            ],
+        });
+    }
+};
 
 produce()
     .then(() => {
