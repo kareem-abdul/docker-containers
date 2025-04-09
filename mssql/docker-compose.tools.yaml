@@ -1,0 +1,28 @@
+name: mssql-tools
+
+services:
+  mssql-tools:
+    container_name: mssql-tools
+    restart: always
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      ACCEPT_EULA: y
+    stdin_open: true
+    tty: true
+    entrypoint: bash
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1512M
+        reservations:
+          cpus: '0.25'
+          memory: 1024M
+    networks:
+      - mssql_tools_network
+
+
+networks:
+  mssql_tools_network:
+    name: mssql_tools_network
+
